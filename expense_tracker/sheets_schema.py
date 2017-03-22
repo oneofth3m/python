@@ -127,11 +127,23 @@ class RowData(Base):
 
 ##############################################################################
 
+class GridData(Base):
+  def __init__(self):
+    schema = {
+      "startRow": "number",
+      "startColumn": "number",
+      "rowData": ["RowData"]
+    }
+    super(GridData, self).__init__(schema)
+
+##############################################################################
+
 TYPE_DICT = {
   "number": int,
   "string": str,
   "boolean": bool,
   "ErrorValue": ErrorValue,
   "ExtendedValue": ExtendedValue,
-  "CellData": CellData
+  "CellData": CellData,
+  "RowData": RowData
 }
