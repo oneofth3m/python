@@ -13,12 +13,15 @@ class TestExpenseTracker(unittest.TestCase):
     json_data = open(json_file).read()
 
     spreadsheet_body = json.loads(json_data)
-    cls._spreadsheet = SheetsApi().create_spreadsheet(spreadsheet_body)
+    #cls._spreadsheet = SheetsApi().create_spreadsheet(spreadsheet_body)
 
   @classmethod
   def tearDownClass(cls):
+    output = ""
+    """
     output = "Deleting of spreadsheet is NOT supported.\nManually Remove : " +\
              cls._spreadsheet["properties"]["title"]
+    """
     print output
   
   @unittest.skip("Ignoring this test")
@@ -31,13 +34,28 @@ class TestExpenseTracker(unittest.TestCase):
     self.assertEqual(spreadsheet_body["properties"]["title"],
                      ret["properties"]["title"])
 
-  """
-  def test_read1(self):
+  @unittest.skip("Ignoring this test")
+  def test_read_spreadsheet(self):
     ret = SheetsApi().get_spreadsheet(self._spreadsheet["spreadsheetId"], [])
 
-  def test_read2(self):
-    ret = SheetsApi().get_spreadsheet(self._spreadsheet["spreadsheetId"], [])
-  """
+  def test_read_values_via_spreadsheet(self):
+    range = "Sheet1!A1:D2"
+    ret = SheetsApi().get_spreadsheet(
+        "1S52oEcqp6CcPr-Goo7Pkc1B401_QGVdxpth8wR5LTkM",
+        range,
+        True)
+    import json
+    str_json = json.dumps(ret, indent=2)
+    print str_json
+
+  def test_read_values(self):
+    range = "Sheet1!A1:D5"
+    ret = SheetsApi().get_spreadsheet_values(
+        "1S52oEcqp6CcPr-Goo7Pkc1B401_QGVdxpth8wR5LTkM",
+        range)
+    import json
+    str_json = json.dumps(ret, indent=2)
+    print str_json
 
 if __name__ == "__main__":
   unittest.main()

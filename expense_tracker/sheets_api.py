@@ -9,9 +9,16 @@ class SheetsApi():
     response = request.execute()
     return response
 
-  def get_spreadsheet(self, spreadsheet_id, ranges):
-    request = self._service.spreadsheets().get(spreadsheetId=spreadsheet_id,
-                                               ranges=ranges)
+  def get_spreadsheet(self, spreadsheet_id, ranges, include_grid_data=False):
+    request =\
+      self._service.spreadsheets().get(spreadsheetId=spreadsheet_id,
+                                       ranges=ranges,
+                                       includeGridData=include_grid_data)
     response = request.execute()
     return response
 
+  def get_spreadsheet_values(self, spreadsheet_id, range_names):
+    request  = self._service.spreadsheets().values().batchGet(
+       spreadsheetId=spreadsheet_id, ranges=range_names)
+    response = request.execute()
+    return response
